@@ -1,7 +1,9 @@
+from datetime import datetime
 from celery import shared_task
 from .models import Loan
 from django.core.mail import send_mail
 from django.conf import settings
+
 
 @shared_task
 def send_loan_notification(loan_id):

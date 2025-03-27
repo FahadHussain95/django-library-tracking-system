@@ -1,6 +1,10 @@
+from django.contrib.auth import authenticate
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
+
 from .models import Author, Book, Member, Loan
 from django.contrib.auth.models import User
+
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,10 +21,12 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = ['id', 'title', 'author', 'author_id', 'isbn', 'genre', 'available_copies']
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email']
+
 
 class MemberSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -31,6 +37,7 @@ class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
         fields = ['id', 'user', 'user_id', 'membership_date']
+
 
 class LoanSerializer(serializers.ModelSerializer):
     book = BookSerializer(read_only=True)
